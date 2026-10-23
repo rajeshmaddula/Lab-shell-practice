@@ -14,7 +14,8 @@ echo "$2 ...Success"
 fi
 }
 
-for PACKAGE in $@(
+for PACKAGE in $@
+do
 dnf list installed $PACKAGE
 if [ $? -ne 0 ]; then
     echo "$PACKAGE not installed .. installing now"
@@ -23,5 +24,5 @@ if [ $? -ne 0 ]; then
 else
     echo "$PACKAGE already installed ..skipping"
 fi
-)
+done
 
