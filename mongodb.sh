@@ -14,10 +14,9 @@ echo "$2 ...Success"
 fi
 }
 
-echo "installing nginx"
-dnf install nghoinx -y
+dnf install nginx -y
 VALIDATE $? "Installing nginx"
 
-
-
+dnf install mysql -y
+VALIDATE $? "Installing mysql"
 
