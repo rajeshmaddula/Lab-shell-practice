@@ -13,24 +13,15 @@ else
 echo "$2 ...Success"
 fi
 }
-dnf list installed nginx
+
+for PACKAGE in $@(
+dnf list installed $PACKAGE
 if [ $? -ne 0 ]; then
-    echo "Nginx not installed .. installing now"
-    dnf install nginx -y
-    VALIDATE $? "Installing nginx"
+    echo "$PACKAGE not installed .. installing now"
+    dnf install $PACKAGE -y
+    VALIDATE $? "$PACKAGE Installation"
 else
-
-    echo "Nginx already installed ..skipping"
+    echo "$PACKAGE already installed ..skipping"
 fi
-
-
-dnf list installed mysql
-if [ $? -ne 0 ]; then
-    echo "mysql not installed .. installing now"
-    dnf install mysql -y
-    VALIDATE $? "Installing mysql"
-else
-echo "mysql already installed ..skipping"
-fi
-
+)
 
