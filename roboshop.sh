@@ -32,7 +32,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
     --query 'Reservations[].Instances[].PrivateIpAddress' \
     --output text)
 
-    RECORD_NAME="$INSTANCE_ID.$DOMAIN_NAME"
+    RECORD_NAME="$INSTANCE.$DOMAIN_NAME"
     echo "IP private IP address is: $IP"
     
     fi
