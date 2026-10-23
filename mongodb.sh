@@ -13,10 +13,19 @@ else
 echo "$2 ...Success"
 fi
 }
-
+dnf list installed nginx
+if [ $? -eq 0 ]: then
+echo "Nginx not installed .. installing now"
+else
+echo "Nginx already installed ..skipping"
 dnf install nginx -y
 VALIDATE $? "Installing nginx"
 
+dnf list installed mysql
+if [ $? -eq 0 ]: then
+echo "mysql not installed .. installing now"
+else
+echo "mysql already installed ..skipping"
 dnf install mysql -y
 VALIDATE $? "Installing mysql"
 
