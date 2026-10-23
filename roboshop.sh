@@ -2,8 +2,8 @@
 
 SG_ID="sg-0574b9e33f7cce2ef"
 AMI_ID="ami-0055977a6e828a4f4"
-#DOMAIN_NAME="raws88s.online"
-#ZONE="Z06264382S55O9BHSS2H6"
+DOMAIN_NAME="raws88s.online"
+ZONE="Z06264382S55O9BHSS2H6"
 
 for INSTANCE in $@
 do
@@ -21,6 +21,8 @@ INSTANCE_ID=$(aws ec2 run-instances \
     --instance-ids $INSTANCE_ID \
     --query 'Reservations[].Instances[].PublicIpAddress' \
     --output text)
+
+    RECORD_NAME="$DOMAIN_NAME"
     echo "IP public IP address is: $IP"
   
     else
@@ -29,8 +31,25 @@ INSTANCE_ID=$(aws ec2 run-instances \
     --instance-ids $INSTANCE_ID \
     --query 'Reservations[].Instances[].PrivateIpAddress' \
     --output text)
+
+    RECORD_NAME="$INSTANCE_ID.$DOMAIN_NAME"
     echo "IP private IP address is: $IP"
     
     fi
+
+    aws route53 change-resource-record-sets \
+    --hosted-zone-id $ZONE \
+    --change-batch '{
+        "Changes": [{
+            "Action": "UPSERT",
+            "ResourceRecordSet": {
+                "Name": "'$RECORD_NAME'",
+                "Type": "A",
+                "TTL": 1,
+                "ResourceRecords": [{"Value": "'$IP'"}]
+            }
+        }]
+    }'
+
 
 done
