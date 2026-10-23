@@ -25,7 +25,7 @@ fi
 
 for PACKAGE in $@
 do
-dnf list installed $PACKAGE
+dnf list installed $PACKAGE &>>$LOGS_FILE
 if [ $? -ne 0 ]; then
     echo "$PACKAGE not installed .. installing now" | tee -a $LOGS_FILE
     dnf install $PACKAGE -y &>>$LOGS_FILE
