@@ -32,3 +32,4 @@ INSTANCE_ID=$(aws ec2 run-instances \
     fi
 
 done
+iio
