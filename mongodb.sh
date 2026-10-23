@@ -13,13 +13,13 @@ echo -e " $R Please use root access to run this cmd $N "
 exit 1
 fi
 
-mdkir -p $LOGS_FOLDER
+mkdir -p $LOGS_FOLDER
 
 VALIDATE(){
 if [ $1 -ne 0 ]; then
 echo -e "$2 ... $R Failur $N" | tee -a $LOGS_FILE
 else
-echo "$2 ...$G Success $N" | tee -a $LOGS_FILE
+echo -e "$2 ...$G Success $N" | tee -a $LOGS_FILE
 fi
 }
 
