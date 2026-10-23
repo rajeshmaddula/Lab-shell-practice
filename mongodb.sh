@@ -31,7 +31,7 @@ if [ $? -ne 0 ]; then
     dnf install $PACKAGE -y &>>$LOGS_FILE
     VALIDATE $? "$PACKAGE Installation"
 else
-    echo "$PACKAGE already installed ..$Y skipping $N" | tee -a $LOGS_FILE
+    echo -e "$PACKAGE already installed ..$Y skipping $N" | tee -a $LOGS_FILE
 fi
 done
 
