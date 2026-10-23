@@ -5,7 +5,7 @@ AMI_ID="ami-0055977a6e828a4f4"
 #DOMAIN_NAME="raws88s.online"
 #ZONE="Z06264382S55O9BHSS2H6"
 
-for INSTANCE IN $@
+for INSTANCE in $@
 do
 INSTANCE_ID=$(aws ec2 run-instances \
     --image-id $AMI_ID \
