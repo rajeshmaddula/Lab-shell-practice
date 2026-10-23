@@ -6,5 +6,14 @@ echo "Please use root access to run this cmd"
 exit 1
 fi
 
+dnf install nginx -y
+
+echo "installing nginx"
+if [ $? -ne 0 ]; then
+echo "Installing nginx ... Failur"
+else
+echo "Installing nginx ...Success"
+fi
+
 
 
