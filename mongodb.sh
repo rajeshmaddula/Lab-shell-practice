@@ -1,16 +1,25 @@
 #!/bin/bash
 USERID=$(id -u)
+LOGS_FOLDER="/var/log/shell-script"
+LOGS_FILE="$LOGS_FOLDER/$0.log"
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[34m"
+
 
 if [ $USERID -ne 0 ]; then
-echo "Please use root access to run this cmd"
+echo -e " $R Please use root access to run this cmd $N "
 exit 1
 fi
 
+mdkir -p $LOGS_FOLDER
+
 VALIDATE(){
 if [ $1 -ne 0 ]; then
-echo "$2 ... Failur"
+echo -e "$2 ... $R Failur $N" | tee -a $LOGS_FILE
 else
-echo "$2 ...Success"
+echo "$2 ...$G Success $N" | tee -a $LOGS_FILE
 fi
 }
 
@@ -18,11 +27,11 @@ for PACKAGE in $@
 do
 dnf list installed $PACKAGE
 if [ $? -ne 0 ]; then
-    echo "$PACKAGE not installed .. installing now"
-    dnf install $PACKAGE -y
+    echo "$PACKAGE not installed .. installing now" | tee -a $LOGS_FILE
+    dnf install $PACKAGE -y &>>$LOGS_FILE
     VALIDATE $? "$PACKAGE Installation"
 else
-    echo "$PACKAGE already installed ..skipping"
+    echo "$PACKAGE already installed ..$Y skipping $N" | tee -a $LOGS_FILE
 fi
 done
 
